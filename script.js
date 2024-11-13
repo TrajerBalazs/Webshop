@@ -132,20 +132,27 @@ function updateCart() {
   const cartItems = document.getElementById("cart-items");
   const totalPrice = document.getElementById("total-price");
 
+  // Kosár elemeinek száma
   cartCount.textContent = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+  // Kosár elemeinek megjelenítése
   cartItems.innerHTML = "";
   cart.forEach((item) => {
     const li = document.createElement("li");
-    li.textContent = `${item.name} x ${item.quantity} - ${
-      item.price * item.quantity
-    } Ft`;
+    li.textContent = `${item.name} x ${item.quantity} - ${item.price * item.quantity} Ft`;
     cartItems.appendChild(li);
   });
-  totalPrice.textContent = `Összesen: ${cart.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  )} Ft`;
+
+  // Összesített ár
+  totalPrice.textContent = `Összesen: ${cart.reduce((acc, item) => acc + item.price * item.quantity, 0)} Ft`;
+
+  // Üzenet, ha a kosár üres
+  if (cart.length === 0) {
+    cartItems.innerHTML = "<li>A kosár üres.</li>";
+    totalPrice.textContent = "Összesen: 0 Ft";
+  }
 }
+
 
 // Kosár megjelenítése/elrejtése
 function toggleCart() {
@@ -153,10 +160,19 @@ function toggleCart() {
   cart.classList.toggle("hidden");
 }
 
-function checkout() {
-  alert("A fizetési funkció jelenleg nem elérhető a demó verzióban.");
-}
+function clearCart() {
+  // Kosár tartalmának törlése
+  cart = [];
 
+  // Kosár frissítése az üres állapothoz
+  updateCart();
+
+  // Kosár mentésének törlése a localStorage-ból
+  localStorage.removeItem("cart");
+
+  // Értesítés a felhasználónak
+  alert("A kosár tartalma törölve lett.");
+}
 
 // Oldal betöltésekor a termékek és a kosár tartalmának betöltése
 window.onload = function () {
