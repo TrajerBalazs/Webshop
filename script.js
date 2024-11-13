@@ -139,12 +139,17 @@ function updateCart() {
   cartItems.innerHTML = "";
   cart.forEach((item) => {
     const li = document.createElement("li");
-    li.textContent = `${item.name} x ${item.quantity} - ${item.price * item.quantity} Ft`;
+    li.textContent = `${item.name} x ${item.quantity} - ${
+      item.price * item.quantity
+    } Ft`;
     cartItems.appendChild(li);
   });
 
   // Összesített ár
-  totalPrice.textContent = `Összesen: ${cart.reduce((acc, item) => acc + item.price * item.quantity, 0)} Ft`;
+  totalPrice.textContent = `Összesen: ${cart.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  )} Ft`;
 
   // Üzenet, ha a kosár üres
   if (cart.length === 0) {
@@ -152,7 +157,6 @@ function updateCart() {
     totalPrice.textContent = "Összesen: 0 Ft";
   }
 }
-
 
 // Kosár megjelenítése/elrejtése
 function toggleCart() {
